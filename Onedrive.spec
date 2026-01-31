@@ -5,7 +5,7 @@ a = Analysis(
     ['Onedrive.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('icon.ico', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -35,5 +35,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['C:\\Users\\rahkim\\Desktop\\icon.ico'],
+    icon=['icon.ico'],
 )
