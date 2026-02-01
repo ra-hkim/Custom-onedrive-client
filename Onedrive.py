@@ -14,6 +14,7 @@ import time
 MOUNT_PATH = "O:\\"
 BASE_DIR = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(sys.argv[0])))
 ICON_PATH = os.path.join(BASE_DIR, "icon.ico")
+CACHE_DIR = os.path.join(os.environ.get('SYSTEMDRIVE', 'C:') + os.sep, 'rclone_cache')
 
 # Default rclone flags (editable in tray)
 rclone_options = {
@@ -36,6 +37,7 @@ def build_rclone_command():
         "--vfs-cache-max-age", "24h",
         "--vfs-read-chunk-size", rclone_options["vfs_read_chunk_size"],
         "--vfs-read-chunk-size-limit", rclone_options["vfs_read_chunk_size_limit"],
+        "--cache-dir", CACHE_DIR,
         "--dir-cache-time", "24h",
         "--poll-interval", rclone_options["poll_interval"],
         "--network-mode",
@@ -50,6 +52,8 @@ def start_mount(icon=None):
     if MOUNT_PROCESS and MOUNT_PROCESS.poll() is None:
         return  # Already running
     try:
+        # Create cache directory if it doesn't exist
+        os.makedirs(CACHE_DIR, exist_ok=True)
         # Run rclone silently
         MOUNT_PROCESS = subprocess.Popen(
             build_rclone_command(),
