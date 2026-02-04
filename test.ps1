@@ -1,0 +1,20 @@
+rclone mount onedrive: O:\ `
+  --vfs-cache-mode full `
+  --vfs-cache-max-size 48G `
+  --vfs-cache-max-age 24h `
+  --vfs-read-chunk-size 256M `
+  --vfs-read-chunk-size-limit 2G `
+  --cache-dir "$env:SYSTEMDRIVE\rclone_cache" `
+  --dir-cache-time 24h `
+  --poll-interval 10s `
+  --network-mode `
+  --links `
+  --transfers 8 `
+  --checkers 16 `
+  --onedrive-chunk-size 160M `
+  --log-level INFO `
+  --fast-list `
+  --rc `
+  --rc-web-gui `
+  --rc-no-auth `
+  --rc-addr 127.0.0.1:5572

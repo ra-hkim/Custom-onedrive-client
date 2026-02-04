@@ -1,0 +1,24 @@
+rclone sync "C:\Users\Rahkim" onedrive:Backups/User-Rahkim `
+  --exclude ".*/**" `
+  --exclude "**/.*/**" `
+  --exclude "**/node_modules/**" `
+  --exclude "**/__pycache__/**" `
+  --exclude "**/*.tmp" `
+  --exclude "**/*.log" `
+  --exclude "**/Temp/**" `
+  --exclude "AppData/Local/Temp/**" `
+  --exclude "AppData/LocalLow/Temp/**" `
+  --exclude "AppData/Roaming/**/Cache/**" `
+  --exclude "AppData/Roaming/**/Code Cache/**" `
+  --exclude "AppData/Roaming/**/GPUCache/**" `
+  --exclude "AppData/Roaming/**/Crashpad/**" `
+  --exclude "AppData/Roaming/Microsoft/Teams/**" `
+  --exclude "AppData/Roaming/Discord/Cache/**" `
+  --exclude "AppData/Roaming/Discord/GPUCache/**" `
+  --exclude "AppData/Roaming/Discord/Code Cache/**" `
+  --transfers 8 `
+  --checkers 16 `
+  --fast-list `
+  --drive-chunk-size 64M `
+  --progress `
+  --delete-during

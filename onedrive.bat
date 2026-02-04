@@ -1,11 +1,42 @@
 @echo off
-REM =============================================
-REM OneDrive Mount Script for Projects/Backups
-REM =============================================
-REM Change drive letter if needed (O:)
+setlocal
 
-echo Mounting OneDrive...
-powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-    "rclone mount onedrive: O: --vfs-cache-mode full --vfs-cache-max-size 48G --vfs-cache-max-age 24h --vfs-read-chunk-size 256M --vfs-read-chunk-size-limit 2G --dir-cache-time 24h --poll-interval 10s --network-mode --allow-other --log-level INFO --fast-list --links"
+REM ========================
+REM Configuration
+REM ========================
+set MOUNT_DIR=C:\Mounts\OneDrive
+set MOUNT_DRIVE=O:
+set CACHE_DIR=%SYSTEMDRIVE%\rclone_cache
 
-pause
+set VFS_CACHE_MAX_SIZE=48G
+set VFS_READ_CHUNK_SIZE=256M
+set VFS_READ_CHUNK_SIZE_LIMIT=2G
+set POLL_INTERVAL=10s
+
+REM ========================
+REM Prepare directories
+REM ========================
+if not exist "%MOUNT_DIR%" mkdir "%MOUNT_DIR%"
+if not exist "%CACHE_DIR%" mkdir "%CACHE_DIR%"
+
+REM Map drive letter
+subst %MOUNT_DRIVE% "%MOUNT_DIR%"
+
+REM ========================
+REM Mount OneDrive
+REM ========================
+rclone mount onedrive: "%MOUNT_DRIVE%\" ^
+  --vfs-cache-mode full ^
+  --vfs-cache-max-size %VFS_CACHE_MAX_SIZE% ^
+  --vfs-cache-max-age 24h ^
+  --vfs-read-chunk-size %VFS_READ_CHUNK_SIZE% ^
+  --vfs-read-chunk-size-limit %VFS_READ_CHUNK_SIZE_LIMIT% ^
+  --cache-dir "%CACHE_DIR%" ^
+  --dir-cache-time 24h ^
+  --poll-interval %POLL_INTERVAL% ^
+  --network-mode ^
+  --links ^
+  --log-level INFO ^
+  --fast-list
+
+endlocal

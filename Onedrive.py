@@ -44,7 +44,10 @@ def build_rclone_command():
         "--allow-other",
         "--links",  # Added as requested
         "--log-level", "INFO",
-        "--fast-list"
+        "--fast-list",
+        "--rc",
+        "--rc-web-gui",
+        "--rc-addr", "172.0.0.1:5572"
     ]
 
 def start_mount(icon=None):
